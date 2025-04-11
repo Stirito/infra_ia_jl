@@ -1,0 +1,94 @@
+version: "3.8"
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    ports:
+      - "5678:5678"
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - internal
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks:
+      - internal
+    environment:
+      - QDRANT__SERVICE__API_KEY=${QDRANT__SERVICE__API_KEY}
+
+  baserow:
+    image: baserow/baserow:1.15.1
+    container_name: baserow
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - BASEROW_PUBLIC_API_URL=${BASEROW_PUBLIC_API_URL}
+      - BASEROW_PUBLIC_WEB_URL=${BASEROW_PUBLIC_WEB_URL}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+    volumes:
+      - baserow_data:/baserow/data
+    networks:
+      - internal
+
+  docling:
+    build:
+      context: ./docling
+    container_name: docling
+    ports:
+      - "5001:5001"
+    volumes:
+      - docling_data:/app/data
+    networks:
+      - internal
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434" # Expose le port Ollama sur la machine hôte
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - internal
+
+  ################################################################
+  # Ollama-init - conteneur d'initialisation (téléchargement modèles)
+  ################################################################
+  ollama-init:
+    image: ollama/ollama:latest
+    container_name: ollama_init
+    depends_on:
+      - ollama # Pour s'assurer que "ollama" démarre d'abord
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - internal
+    entrypoint: /bin/sh
+    command: >
+      -c "
+        sleep 3 &&
+        # Exemple : téléchargement du modèle Llama2 7B
+        OLLAMA_HOST=ollama:11434 ollama pull mistral-small &&
+        # Exemple : téléchargement d'un modèle d'embeddings
+        OLLAMA_HOST=ollama:11434 ollama pull nomic-embed-text
+      "
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  n8n_data:
+  qdrant_data:
+  baserow_data:
+  docling_data:
+  ollama_data:
