@@ -5,7 +5,7 @@ Ce dépôt contient une stack complète pour déployer plusieurs services orient
 - **n8n** : Plateforme d’automatisation et d’orchestration de workflows  
 - **Qdrant** : Moteur de vectorisation pour la recherche sémantique  
 - **Baserow** : Base de données no-code / low-code  
-- **Docling** : (description succincte de l’usage)  
+- **Docling** : Parser optimisé pour les LLMs 
 - **Ollama** : Serveur local LLM (permet de télécharger et d’héberger des modèles comme Mistral, Llama2, etc.)
 
 ## Prérequis
