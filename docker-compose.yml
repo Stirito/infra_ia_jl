@@ -27,8 +27,7 @@ services:
     image: baserow/baserow:1.15.1
     container_name: baserow
     ports:
-      - "80:80"
-      - "443:443"
+      - "8080:8080"
     environment:
       - BASEROW_PUBLIC_API_URL=${BASEROW_PUBLIC_API_URL}
       - BASEROW_PUBLIC_WEB_URL=${BASEROW_PUBLIC_WEB_URL}
