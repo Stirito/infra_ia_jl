@@ -16,6 +16,7 @@ services:
       ### N8N specific environment variables
       ### Obligatoire si un reverse proxy est mis sur le serveur du client
       - N8N_EXPRESS_TRUST_PROXY=true
+      - N8N_PROXY_HOPS=1
       - N8N_RUNNERS_ENABLED=true
     volumes:
       - n8n_data:/home/node/.n8n
