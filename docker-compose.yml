@@ -7,9 +7,23 @@ services:
     ports:
       - "5678:5678"
     environment:
+      # Nom de domaine public où se trouve l’interface n8n
+      - N8N_HOST=agent-ia-preprod-n8n.opero.tv
+
+      # Protocole utilisé sur la couche externe (proxy) : https
+      - N8N_PROTOCOL=https
+
+      # Le port du point de vue externe. Même si votre conteneur tourne sur 5678,
+      # côté client vous êtes sur 443 (si le proxy écoute sur 443).
+      - N8N_PORT=443
+
+      # Adresse publique pour les webhooks
+      # Utile si vous comptez exécuter des workflows webhook en production
+      - WEBHOOK_URL=https://agent-ia-preprod-n8n.opero.tv/
       ### N8N specific environment variables
       ### Obligatoire si un reverse proxy est mis sur le serveur du client
       - N8N_EXPRESS_TRUST_PROXY=true
+      - N8N_RUNNERS_ENABLED=true
     volumes:
       - n8n_data:/home/node/.n8n
     networks:
