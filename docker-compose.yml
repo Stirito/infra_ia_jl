@@ -11,7 +11,7 @@ services:
       - N8N_PROTOCOL=https
       # Le port du point de vue externe. Même si votre conteneur tourne sur 5678,
       # côté client vous êtes sur 443 (si le proxy écoute sur 443).
-      - N8N_PORT=443
+      - N8N_PORT=80
       # Adresse publique pour les webhooks
       # Utile si vous comptez exécuter des workflows webhook en production
       - WEBHOOK_URL=https://agent-ia-preprod-n8n.opero.tv/
