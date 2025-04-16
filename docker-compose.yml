@@ -18,6 +18,7 @@ services:
       - N8N_EXPRESS_TRUST_PROXY=true
       - N8N_PROXY_HOPS=1
       - N8N_RUNNERS_ENABLED=true
+      - N8N_PUSH_BACKEND=sse
     volumes:
       - n8n_data:/home/node/.n8n
     networks:
