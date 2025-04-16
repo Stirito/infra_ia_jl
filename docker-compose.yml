@@ -9,6 +9,7 @@ services:
     environment:
       # Protocole utilisé sur la couche externe (proxy) : https
       - N8N_PROTOCOL=https
+      - N8N_HOST=agent-ia-preprod-n8n.opero.tv
       # Adresse publique pour les webhooks
       # Utile si vous comptez exécuter des workflows webhook en production
       - WEBHOOK_URL=https://agent-ia-preprod-n8n.opero.tv/
